@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:uno",
+    "programmer": "arduino:avrisp",
+    "port": "/dev/ttyS0",
+    "sketch": "example02/example-milis.ino"
+}
