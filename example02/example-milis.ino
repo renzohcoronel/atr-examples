@@ -27,7 +27,7 @@ void loop() {
     
 
     // Task 2 - Intermitent led
-    if(currentTime - previousTimeLed1 > TIME_INTERVAL_1) {  
+    if(currentTime - previousTimeLed2 > TIME_INTERVAL_2) {  
       Serial.println("Task2");
       previousTimeLed2 = currentTime;
       int currentValueLed2 = digitalRead(LED_2_PIN);
