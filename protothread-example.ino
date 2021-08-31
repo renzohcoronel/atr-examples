@@ -1,0 +1,71 @@
+/* Aplicaciones en tiempo real - FRLP
+  Ejemplo: 03
+  Circuito simulado: https://www.tinkercad.com/things/ffl84zS9Lln-threads/editel?sharecode=2TBQMTCOTI6vwOd5Vc-v3kFIP0pLY9kaTZ8JEdZDrDg
+*/
+
+#include <pt.h>
+// Crear tus protothread(s)
+#define LED_1_PIN 10
+#define LED_2_PIN 11
+#define LED_3_PIN 12
+
+unsigned int TIME_INTERVAL_1 = 1000;
+unsigned int TIME_INTERVAL_2 = 2000;
+
+static struct pt ptBlinkLed1, ptBlinkLed2; // ref:. https://www.programiz.com/c-programming/c-structures
+
+// Funcion que ejecutara el thread.
+static int protothreadBlinkLed1(struct pt *pt, int PIN_ID, int INTERVAL)
+{
+    static unsigned long timestap = 0;
+    // Arrancar el protothread
+    PT_BEGIN(pt);
+    while (1)
+    {
+      
+        timestap = millis();       
+        PT_WAIT_UNTIL(pt, (millis() - timestap) > INTERVAL);
+     
+        int currentValueLed1 = digitalRead(PIN_ID);
+        currentValueLed1 == HIGH ? digitalWrite(PIN_ID, LOW) : digitalWrite(PIN_ID, HIGH);
+  
+    }
+    PT_END(pt);
+}
+
+static int protothreadBlinkLed2(struct pt *pt, int PIN_ID, int INTERVAL)
+{
+    static unsigned long timestap = 0;
+    // Arrancar el protothread
+    PT_BEGIN(pt);
+    while (1)
+    {
+      
+        timestap = millis();       
+        PT_WAIT_UNTIL(pt, (millis() - timestap) > INTERVAL);
+     
+        int currentValueLed1 = digitalRead(PIN_ID);
+        currentValueLed1 == HIGH ? digitalWrite(PIN_ID, LOW) : digitalWrite(PIN_ID, HIGH);
+  
+    }
+    PT_END(pt);
+}
+
+void setup()
+{
+    // Se debe iniciar el thread
+    Serial.begin(9600);
+    pinMode(LED_1_PIN, OUTPUT);
+    pinMode(LED_2_PIN, OUTPUT);
+    pinMode(LED_3_PIN, OUTPUT);
+    PT_INIT(&ptBlinkLed1);
+    PT_INIT(&ptBlinkLed2);
+   
+}
+
+void loop()
+{
+    // Ejecutar la funcion del thread
+    protothreadBlinkLed1(&ptBlinkLed1, LED_1_PIN, TIME_INTERVAL_1); // Siempre se pasa el parametro por referencia
+    protothreadBlinkLed2(&ptBlinkLed2, LED_2_PIN, TIME_INTERVAL_2);
+}
