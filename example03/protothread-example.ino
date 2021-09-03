@@ -12,7 +12,7 @@
 unsigned int TIME_INTERVAL_1 = 1000;
 unsigned int TIME_INTERVAL_2 = 2000;
 
-static struct pt ptBlinkLed1, ptBlinkLed2; // ref:. https://www.programiz.com/c-programming/c-structures
+static struct pt ptHumedity, ptTemperature; // ref:. https://www.programiz.com/c-programming/c-structures
 
 // Funcion que ejecutara el thread.
 static int protothreadBlinkLed1(struct pt *pt, int PIN_ID, int INTERVAL)
@@ -58,14 +58,14 @@ void setup()
     pinMode(LED_1_PIN, OUTPUT);
     pinMode(LED_2_PIN, OUTPUT);
     pinMode(LED_3_PIN, OUTPUT);
-    PT_INIT(&ptBlinkLed1);
-    PT_INIT(&ptBlinkLed2);
+    PT_INIT(&ptHumedity);
+    PT_INIT(&ptTemperature);
    
 }
 
 void loop()
 {
     // Ejecutar la funcion del thread
-    protothreadBlinkLed1(&ptBlinkLed1, LED_1_PIN, TIME_INTERVAL_1); // Siempre se pasa el parametro por referencia
-    protothreadBlinkLed2(&ptBlinkLed2, LED_2_PIN, TIME_INTERVAL_2);
+    protothreadBlinkLed1(&ptHumedity, LED_1_PIN, TIME_INTERVAL_1); // Siempre se pasa el parametro por referencia
+    protothreadBlinkLed2(&ptTemperature, LED_2_PIN, TIME_INTERVAL_2);
 }
